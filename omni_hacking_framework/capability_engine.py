@@ -3,12 +3,40 @@ from vulnerability_research import ZeroDayMiner
 import asyncio
 from rl_agent import RLAgent
 
+
+class VectorDatabase:
+    """Minimal in-memory vector database placeholder."""
+
+    def __init__(self):
+        self.storage = {}
+
+    async def add(self, key: str, value: str) -> None:
+        self.storage[key] = value
+
+    async def query(self, key: str) -> str | None:
+        return self.storage.get(key)
+
+
+class ProficiencyEvaluator:
+    """Stub skill evaluator returning constant proficiency."""
+
+    def assess(self, _tool: str) -> float:
+        return 1.0
+
+
+class CodeSynthesizer:
+    """Simple code generator stub."""
+
+    def generate(self, patterns, primitives) -> str:
+        return "".join(patterns) + "".join(primitives)
+
 class CapabilityGrowthEngine:
     def __init__(self):
         self.mutator = GeneticCodeMutator()
         self.miner = ZeroDayMiner()
         self.capability_db = VectorDatabase()
         self.skill_assessor = ProficiencyEvaluator()
+        self.code_synthesizer = CodeSynthesizer()
         self.reinforcement_learner = ReinforcementLearner()
         self.rl_agent = None  # Will be initialized with environment
     
@@ -47,6 +75,19 @@ class CapabilityGrowthEngine:
             research_data['patterns'],
             research_data['exploit_primitives']
         )
+
+    async def _validate_tool(self, tool: str) -> dict:
+        """Placeholder validation returning a perfect success rate."""
+        await asyncio.sleep(0)
+        return {"success_rate": 1.0}
+
+    async def _integrate_into_toolkit(self, tool: str) -> None:
+        """Store validated tools in the vector database."""
+        await self.capability_db.add(tool, tool)
+
+    def _update_skill_level(self, domain: str) -> None:
+        """Update internal records of proficiency."""
+        _ = domain  # No-op for placeholder
 
 class ReinforcementLearner:
     def __init__(self):
