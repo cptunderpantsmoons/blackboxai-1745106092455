@@ -1,5 +1,6 @@
-from mcp_integration import MCPPacket, MCPHeader, MCPSecurityFooter, MCPPayload
+from .mcp_integration import MCPPacket, MCPHeader, MCPSecurityFooter, MCPPayload
 from cryptography.hazmat.primitives.asymmetric import ed25519
+from cryptography.hazmat.primitives import serialization
 import struct
 import asyncio
 
@@ -45,10 +46,14 @@ class MCPCompliantAttackSystem:
             struct.pack('!Q', self.key_rotation_index)
         )
         signature = self.signing_key.sign(signing_payload)
+        public_key_bytes = self.signing_key.public_key().public_bytes(
+            encoding=serialization.Encoding.Raw,
+            format=serialization.PublicFormat.Raw,
+        )
         return MCPSecurityFooter(
             signature=signature,
-            public_key=self.signing_key.public_key().public_bytes(),
-            key_rotation_index=self.key_rotation_index
+            public_key=public_key_bytes,
+            key_rotation_index=self.key_rotation_index,
         )
 
     def _normalize_to_mcp_schema(self, context: dict) -> dict:

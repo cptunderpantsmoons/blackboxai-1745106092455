@@ -1,4 +1,5 @@
-from mcp_integration import MCPPacket
+from .mcp_integration import MCPPacket
+from .exceptions import SecurityViolationError
 
 class MCPAwareClaudeInterface:
     def __init__(self, base_interface):

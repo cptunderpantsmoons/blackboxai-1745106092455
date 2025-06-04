@@ -1,4 +1,4 @@
-from mcp_integration import MCPKeyManager, MCPSecurityEnforcer
+from mcp_security import MCPKeyManager, MCPSecurityEnforcer
 from mcp_attack_orchestrator import MCPCompliantAttackSystem
 from rl_environment import RLEnvironment
 from rl_agent import RLAgent
